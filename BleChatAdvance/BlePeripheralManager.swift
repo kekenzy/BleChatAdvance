@@ -12,8 +12,6 @@ import CoreBluetooth
 
 class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
     
-    let SERVICE_UUID = "0BF806E9-F1FE-4326-AB21-CEAFDEAFE0E0"
-    let CHR_UUID = "0001"
     static let sharedInstance: BlePeripheralManager = BlePeripheralManager()
     var peripheralManager: CBPeripheralManager!
     var serviceUUID: CBUUID!
@@ -40,9 +38,6 @@ class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
         self.peripheralManager = CBPeripheralManager(delegate: self, queue: nil, options: nil)
     }
     
-    func debugPrint(msg:String) {
-        print("[PE] \(msg)")
-    }
     
     func publishservice () {
         
@@ -109,7 +104,7 @@ class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
     // ペリフェラルマネージャの状態が変化すると呼ばれる
     func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
         
-        debugPrint("state: \(peripheral.state)")
+        DLOG(LogKind.PE,message: "state: \(peripheral.state)")
         
         switch peripheral.state {
             
@@ -127,11 +122,11 @@ class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
     func peripheralManager(peripheral: CBPeripheralManager, didAddService service: CBService, error: NSError?) {
         
         if (error != nil) {
-            debugPrint("サービス追加失敗！ error: \(error)")
+            DLOG(LogKind.PE,message:"サービス追加失敗！ error: \(error)")
             return
         }
         
-        debugPrint("サービス追加成功！")
+        DLOG(LogKind.PE,message:"サービス追加成功！")
         
         // アドバタイズ開始
         self.startAdvertise()
@@ -141,11 +136,11 @@ class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
     func peripheralManagerDidStartAdvertising(peripheral: CBPeripheralManager, error: NSError?) {
         
         if (error != nil) {
-            debugPrint("アドバタイズ開始失敗！ error: \(error)")
+            DLOG(LogKind.PE,message:"アドバタイズ開始失敗！ error: \(error)")
             return
         }
         
-        debugPrint("アドバタイズ開始成功！")
+        DLOG(LogKind.PE,message:"アドバタイズ開始成功！")
     }
     
     // Readリクエスト受信時に呼ばれる
@@ -156,7 +151,7 @@ class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
             value = NSString(data: request.characteristic.value!, encoding: NSUTF8StringEncoding)
             
         }
-        debugPrint("Readリクエスト受信！ requested service uuid:\(request.characteristic.service.UUID) characteristic uuid:\(request.characteristic.UUID) value:\(value)")
+        DLOG(LogKind.PE,message:"Readリクエスト受信！ requested service uuid:\(request.characteristic.service.UUID) characteristic uuid:\(request.characteristic.UUID) value:\(value)")
         
         // プロパティで保持しているキャラクタリスティックへのReadリクエストかどうかを判定
         if request.characteristic.UUID.isEqual(self.characteristic.UUID) {
@@ -172,7 +167,7 @@ class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
     // Writeリクエスト受信時に呼ばれる
     func peripheralManager(peripheral: CBPeripheralManager, didReceiveWriteRequests requests: [CBATTRequest]) {
 
-        debugPrint("\(requests.count) 件のWriteリクエストを受信！")
+        DLOG(LogKind.PE,message:"\(requests.count) 件のWriteリクエストを受信！")
 
         for request in requests {
             
@@ -181,12 +176,15 @@ class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
                 value = NSString(data: request.characteristic.value!, encoding: NSUTF8StringEncoding)
                 
             }
-            debugPrint("Requested value:\(value) service uuid:\(request.characteristic.service.UUID) characteristic uuid:\(request.characteristic.UUID)")
+            DLOG(LogKind.PE,message:"Requested value:\(value) service uuid:\(request.characteristic.service.UUID) characteristic uuid:\(request.characteristic.UUID)")
             
             if request.characteristic.UUID.isEqual(self.characteristic.UUID) {
                 
                 // CBMutableCharacteristicのvalueに、CBATTRequestのvalueをセット
                 self.characteristic.value = request.value;
+                let nc = NSNotificationCenter.defaultCenter()
+                nc.postNotificationName(NC_MSG, object: nil, userInfo: ["message" : value!.description])
+                
             }
         }
 
@@ -197,12 +195,12 @@ class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
     
     // Notify開始要求
     func peripheralManager(peripheral: CBPeripheralManager, central: CBCentral, didSubscribeToCharacteristic characteristic: CBCharacteristic) {
-        debugPrint("Notify開始要求受信！")
+        DLOG(LogKind.PE,message:"Notify開始要求受信！")
     }
     
     // Notify開始要求
     func peripheralManager(peripheral: CBPeripheralManager, central: CBCentral, didUnsubscribeFromCharacteristic characteristic: CBCharacteristic) {
-        debugPrint("Notify停止要求受信！")
+        DLOG(LogKind.PE,message:"Notify停止要求受信！")
     }
     
 }

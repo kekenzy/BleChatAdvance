@@ -24,6 +24,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.dataSource = self
         bleCentralManager = BleCentralManager.sharedInstance;
         blePeripheralManager = BlePeripheralManager.sharedInstance
+        
+        // 登録
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.addObserver(self, selector: "handleNotification:", name: NC_MSG, object: nil)
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,15 +52,39 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         let text = talkList[indexPath.row]
         cell.textLabel!.text = text
-        self.msgText.text = ""
+//        self.msgText.text = ""
         return cell
     }
+    
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool{
+        // キーボードを閉じる
+//        textField.resignFirstResponder()
+        return true
+    }
+    
+    func handleNotification(notification: NSNotification) {
+        // 変数宣言時にアンラップ & キャストする方法
+        var value:String! = ""
+        if let userInfo = notification.userInfo {
+            value = userInfo["message"] as! String
+        }
 
+        talkList.insert(value, atIndex: 0)
+        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+
+    @IBAction func tapScreen(sender: AnyObject) {
+        DLOG(LogKind.COM,message: "tapScreen")
+//        self.view.endEditing(true)
+    }
+    
     @IBAction func onSendMsg(sender: AnyObject) {
         talkList.insert(self.msgText.text!, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-//        bleCentralManager.writeMsg(self.msgText.text)
+        bleCentralManager.writeMsg(self.msgText.text)
         // Send はペリフェラルから
     }
 }

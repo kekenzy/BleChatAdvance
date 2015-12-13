@@ -12,8 +12,6 @@ import CoreBluetooth
 
 class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
-    let SERVICE_UUID = "0BF806E9-F1FE-4326-AB21-CEAFDEAFE0E0"
-    let CHR_UUID = "0001"
     static let sharedInstance: BleCentralManager = BleCentralManager()
     var centralManager: CBCentralManager!
     var peripheralList:[CBPeripheral]!
@@ -27,15 +25,12 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         self.peripheralList = [CBPeripheral]()
     }
     
-    func debugPrint(msg:String) {
-        print("[CE] \(msg)")
-    }
     
     // =========================================================================
     // MARK: Public
     
     func startScan() {
-        debugPrint("スキャン開始")
+        DLOG(LogKind.CE,message:"スキャン開始")
         // peripherarl側でCBAdvertisementDataServiceUUIDsKeyをアドバタイズしないと検出できない
         let serviceUUID = [CBUUID(string:SERVICE_UUID)]
         
@@ -53,6 +48,11 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     }
     
     func writeMsg(msg:String?) {
+        if centralManager.isScanning {
+            DLOG(LogKind.CE,message:"スキャン中....")
+            return
+        }
+            
         self.msgText = msg
         self.startScan()
     }
@@ -62,27 +62,27 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     // セントラルマネージャの状態が変化すると呼ばれる
     // CBCentralManagerの状態変化を取得
     func centralManagerDidUpdateState(central: CBCentralManager) {
-        debugPrint("state: \(central.state.rawValue)")
+        DLOG(LogKind.CE,message:"state: \(central.state.rawValue)")
         
         switch(central.state){
         case CBCentralManagerState.PoweredOn:
-            self.startScan()
+//            self.startScan()
             break
             
         case CBCentralManagerState.PoweredOff:
-            debugPrint("電源が入っていないようです。")
+            DLOG(LogKind.CE,message:"電源が入っていないようです。")
             break
             
         case CBCentralManagerState.Unknown:
-            debugPrint("unknown")
+            DLOG(LogKind.CE,message:"unknown")
             break
             
         case CBCentralManagerState.Unauthorized:
-            debugPrint("Unauthorized")
+            DLOG(LogKind.CE,message:"Unauthorized")
             break
             
         case CBCentralManagerState.Unsupported:
-            debugPrint("Unsupported")
+            DLOG(LogKind.CE,message:"Unsupported")
             break
             
         default:
@@ -93,7 +93,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     
     // ペリフェラルを発見すると呼ばれる
     func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
-        debugPrint("発見したBLEデバイス: \(peripheral)")
+        DLOG(LogKind.CE,message:"発見したBLEデバイス: \(peripheral)")
         
         if !self.peripheralList.contains(peripheral) {
             self.peripheralList.insert(peripheral, atIndex: 0)
@@ -106,7 +106,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     
     // ペリフェラルへの接続が成功すると呼ばれる
     func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
-        debugPrint("接続成功！")
+        DLOG(LogKind.CE,message:"接続成功！")
         
         // サービス探索結果を受け取るためにデリゲートをセット
         peripheral.delegate = self
@@ -118,11 +118,11 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     
     // ペリフェラルへの接続が失敗すると呼ばれる
     func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-        debugPrint("接続失敗・・・")
+        DLOG(LogKind.CE,message:"接続失敗・・・")
     }
     
     func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-        debugPrint("切断完了")
+        DLOG(LogKind.CE,message:"切断完了")
         // TODO 暫定
         self.peripheralList.removeAll()
     }
@@ -135,17 +135,17 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
         
         if (error != nil) {
-            debugPrint("エラー: \(error)")
+            DLOG(LogKind.CE,message:"エラー: \(error)")
             return
         }
         
         if !(peripheral.services?.count > 0) {
-            debugPrint("no services")
+            DLOG(LogKind.CE,message:"no services")
             return
         }
         
         let services = peripheral.services!
-        debugPrint("\(services.count) 個のサービスを発見！ \(services)")
+        DLOG(LogKind.CE,message:"\(services.count) 個のサービスを発見！ \(services)")
         
         for service in services {
             // キャラクタリスティック探索開始
@@ -156,17 +156,17 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     // キャラクタリスティック発見時に呼ばれる
     func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
         if (error != nil) {
-            debugPrint("エラー: \(error)")
+            DLOG(LogKind.CE,message:"エラー: \(error)")
             return
         }
         
         if !(service.characteristics?.count > 0) {
-            debugPrint("no characteristics")
+            DLOG(LogKind.CE,message:"no characteristics")
             return
         }
         
         let characteristics = service.characteristics!
-        debugPrint("\(characteristics.count) 個のキャラクタリスティックを発見！ \(characteristics)")
+        DLOG(LogKind.CE,message:"\(characteristics.count) 個のキャラクタリスティックを発見！ \(characteristics)")
         
         for characteristic in characteristics {
             
@@ -175,22 +175,22 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
                 
                 characteristic.properties
                 if characteristic.properties.contains(CBCharacteristicProperties.Notify) {
-                    debugPrint("Notify On ")
-                    peripheral.setNotifyValue(true, forCharacteristic: characteristic)
+                    DLOG(LogKind.CE,message:"Notify On ")
+//                    peripheral.setNotifyValue(true, forCharacteristic: characteristic)
                 }
                 if characteristic.properties.contains(CBCharacteristicProperties.Read) {
-                    debugPrint("Read On ")
-                    peripheral.readValueForCharacteristic(characteristic)
+                    DLOG(LogKind.CE,message:"Read On ")
+//                    peripheral.readValueForCharacteristic(characteristic)
                 }
                 if characteristic.properties.contains(CBCharacteristicProperties.Write) {
-                    debugPrint("Write On ")
+                    DLOG(LogKind.CE,message:"Write On ")
                     let data = self.msgText?.dataUsingEncoding(NSUTF8StringEncoding)
                     peripheral.writeValue(data!, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithResponse)
                 }
                 if characteristic.properties.contains(CBCharacteristicProperties.WriteWithoutResponse) {
-                    debugPrint("WriteWithResopnse On ")
+                    DLOG(LogKind.CE,message:"WriteWithResopnse On ")
                     let data = self.msgText?.dataUsingEncoding(NSUTF8StringEncoding)
-                    peripheral.writeValue(data!, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithoutResponse)
+//                    peripheral.writeValue(data!, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithoutResponse)
                 }
                 
             }
@@ -200,7 +200,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     // データ読み込みが完了すると呼ばれる
     func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
         if (error != nil) {
-            debugPrint("読み込み失敗...error: \(error), characteristic uuid: \(characteristic.UUID)")
+            DLOG(LogKind.CE,message:"読み込み失敗...error: \(error), characteristic uuid: \(characteristic.UUID)")
             return
         }
         var value:NSString? = nil
@@ -208,13 +208,13 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
             value = NSString(data: characteristic.value!, encoding: NSUTF8StringEncoding)
             
         }
-        debugPrint("読み込み成功！service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID), value: \(value)")
+        DLOG(LogKind.CE,message:"読み込み成功！service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID), value: \(value)")
     }
     
     // Notify受付が完了すると呼ばれる
     func peripheral(peripheral: CBPeripheral, didUpdateNotificationStateForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
         if (error != nil) {
-            debugPrint("Notify受付失敗...error: \(error), characteristic uuid: \(characteristic.UUID)")
+            DLOG(LogKind.CE,message:"Notify受付失敗...error: \(error), characteristic uuid: \(characteristic.UUID)")
             return
         }
         var value:NSString? = nil
@@ -222,7 +222,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
             value = NSString(data: characteristic.value!, encoding: NSUTF8StringEncoding)
             
         }
-        debugPrint("Notify受付成功！service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID), value: \(value)")
+        DLOG(LogKind.CE,message:"Notify受付成功！service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID), value: \(value)")
         
     }
     
@@ -230,7 +230,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     // データ書き込みが完了すると呼ばれる
     func peripheral(peripheral: CBPeripheral, didWriteValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
         if (error != nil) {
-            debugPrint("書き込み失敗...error: \(error), characteristic uuid: \(characteristic.UUID)")
+            DLOG(LogKind.CE,message:"書き込み失敗...error: \(error), characteristic uuid: \(characteristic.UUID)")
             return
         }
         var value:NSString? = nil
@@ -238,7 +238,8 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
             value = NSString(data: characteristic.value!, encoding: NSUTF8StringEncoding)
             
         }
-        debugPrint("書き込み成功！service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID), value: \(value)")
+        DLOG(LogKind.CE,message:"書き込み成功！service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID), value: \(value)")
+        self.centralManager.cancelPeripheralConnection(peripheral)
     }
     
     

@@ -1,20 +1,28 @@
 {
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "CDD5F87C531C8396E11BF5F5089EF023ADE37311",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
     "bba2b308-7cba-4c88-b84e-13ba03117d19++7366" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "CDD5F87C531C8396E11BF5F5089EF023ADE37311" : 0,
     "bba2b308-7cba-4c88-b84e-13ba03117d19++7366" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "4C700575-00DE-4583-AAC5-46F2FC30B750",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "CDD5F87C531C8396E11BF5F5089EF023ADE37311" : "BleChatAdvance\/",
     "bba2b308-7cba-4c88-b84e-13ba03117d19++7366" : ".."
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "BleChatAdvance",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "BleChatAdvance.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kekenzy\/BleChatAdvance.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CDD5F87C531C8396E11BF5F5089EF023ADE37311"
+    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/172.28.35.70\/svn\/lc-mobile",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
