@@ -17,6 +17,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var bleCentralManager:BleCentralManager!;
     var blePeripheralManager:BlePeripheralManager!;
     
+    // =========================================================================
+    // MARK:UIViewController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,8 +38,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
 
-    // セルの列数
+    // =========================================================================
+    // MARK:UITableViewDelegate
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

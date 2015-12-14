@@ -29,6 +29,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     // =========================================================================
     // MARK: Public
     
+
     func startScan() {
         DLOG(LogKind.CE,message:"スキャン開始")
         // peripherarl側でCBAdvertisementDataServiceUUIDsKeyをアドバタイズしないと検出できない
@@ -48,11 +49,11 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     }
     
     func writeMsg(msg:String?) {
-        if centralManager.isScanning {
-            DLOG(LogKind.CE,message:"スキャン中....")
-            return
-        }
-            
+//        if centralManager.isScanning {
+//            DLOG(LogKind.CE,message:"スキャン中....")
+//            return
+//        }
+        
         self.msgText = msg
         self.startScan()
     }
@@ -183,13 +184,15 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
 //                    peripheral.readValueForCharacteristic(characteristic)
                 }
                 if characteristic.properties.contains(CBCharacteristicProperties.Write) {
-                    DLOG(LogKind.CE,message:"Write On ")
                     let data = self.msgText?.dataUsingEncoding(NSUTF8StringEncoding)
+//                    let msg = "Hello!!!!!!!"
+//                    let data = msg.dataUsingEncoding(NSUTF8StringEncoding)
+                    DLOG(LogKind.CE,message:"Write On :\(self.msgText!)")
                     peripheral.writeValue(data!, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithResponse)
                 }
                 if characteristic.properties.contains(CBCharacteristicProperties.WriteWithoutResponse) {
                     DLOG(LogKind.CE,message:"WriteWithResopnse On ")
-                    let data = self.msgText?.dataUsingEncoding(NSUTF8StringEncoding)
+//                    let data = self.msgText?.dataUsingEncoding(NSUTF8StringEncoding)
 //                    peripheral.writeValue(data!, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithoutResponse)
                 }
                 
@@ -208,7 +211,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
             value = NSString(data: characteristic.value!, encoding: NSUTF8StringEncoding)
             
         }
-        DLOG(LogKind.CE,message:"読み込み成功！service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID), value: \(value)")
+        DLOG(LogKind.CE,message:"読み込み成功！value: \(value) service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID)")
     }
     
     // Notify受付が完了すると呼ばれる
@@ -222,7 +225,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
             value = NSString(data: characteristic.value!, encoding: NSUTF8StringEncoding)
             
         }
-        DLOG(LogKind.CE,message:"Notify受付成功！service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID), value: \(value)")
+        DLOG(LogKind.CE,message:"Notify受付成功！value: \(value) service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID)")
         
     }
     
@@ -238,8 +241,11 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
             value = NSString(data: characteristic.value!, encoding: NSUTF8StringEncoding)
             
         }
-        DLOG(LogKind.CE,message:"書き込み成功！service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID), value: \(value)")
-        self.centralManager.cancelPeripheralConnection(peripheral)
+        DLOG(LogKind.CE,message:"書き込み成功！value: \(value) service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID)")
+        
+//        self.centralManager.cancelPeripheralConnection(peripheral)
+//        self.stopScan()
+        self.peripheralList.removeAll()
     }
     
     

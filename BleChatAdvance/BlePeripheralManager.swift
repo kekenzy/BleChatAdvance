@@ -182,8 +182,11 @@ class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
                 
                 // CBMutableCharacteristicのvalueに、CBATTRequestのvalueをセット
                 self.characteristic.value = request.value;
+                DLOG(LogKind.PE,message:"\(requests.count) 件のWriteリクエストを受信！")
                 let nc = NSNotificationCenter.defaultCenter()
-                nc.postNotificationName(NC_MSG, object: nil, userInfo: ["message" : value!.description])
+                if value != nil {
+                    nc.postNotificationName(NC_MSG, object: nil, userInfo: ["message" : value!.description])
+                }
                 
             }
         }
