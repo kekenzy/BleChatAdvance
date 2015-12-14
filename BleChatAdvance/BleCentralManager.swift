@@ -243,9 +243,8 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         }
         DLOG(LogKind.CE,message:"書き込み成功！value: \(value) service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID)")
         
-//        self.centralManager.cancelPeripheralConnection(peripheral)
-//        self.stopScan()
-        self.peripheralList.removeAll()
+        self.centralManager.cancelPeripheralConnection(peripheral)
+        self.stopScan()
     }
     
     
