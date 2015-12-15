@@ -14,7 +14,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     
     static let sharedInstance: BleCentralManager = BleCentralManager()
     var centralManager: CBCentralManager!
-    var peripheralList:[CBPeripheral]!
+    var peripheralDict:Dictionary<String, CBPeripheral> = [String:CBPeripheral]()
     var msgText:String?
     
     // =========================================================================
@@ -22,7 +22,6 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     override private init() {
         super.init()
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
-        self.peripheralList = [CBPeripheral]()
     }
     
     
@@ -31,11 +30,12 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     
 
     func startScan() {
-        DLOG(LogKind.CE,message:"スキャン開始")
+//        var peripherarls = self.centralManager.retrieveConnectedPeripheralsWithServices(<#T##serviceUUIDs: [CBUUID]##[CBUUID]#>)
         // peripherarl側でCBAdvertisementDataServiceUUIDsKeyをアドバタイズしないと検出できない
         let serviceUUID = [CBUUID(string:SERVICE_UUID)]
         
         // アドバダタイズを１回にまとめるかかどうか、NOはまとめる(iOSのみ有効)
+        DLOG(LogKind.CE,message:"スキャン開始")
         let OPTION:Dictionary = [CBCentralManagerScanOptionAllowDuplicatesKey:false]
         self.centralManager!.scanForPeripheralsWithServices(serviceUUID, options:OPTION)
         
@@ -45,7 +45,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     
     func stopScan() {
         self.centralManager.stopScan()
-        self.peripheralList.removeAll()
+        self.peripheralDict.removeAll()
     }
     
     func writeMsg(msg:String?) {
@@ -94,11 +94,15 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     
     // ペリフェラルを発見すると呼ばれる
     func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
-        DLOG(LogKind.CE,message:"発見したBLEデバイス: \(peripheral)")
+        let uuid = advertisementData[CBAdvertisementDataOverflowServiceUUIDsKey]
+        let localName  = advertisementData[CBAdvertisementDataLocalNameKey]
+        DLOG(LogKind.CE,message:"発見したBLEデバイス: \(peripheral) localName: \(localName) uuid: \(uuid)")
         
-        if !self.peripheralList.contains(peripheral) {
-            self.peripheralList.insert(peripheral, atIndex: 0)
-            
+        
+        let value = self.peripheralDict[peripheral.name!]
+        if value == nil {
+            self.peripheralDict[peripheral.name!] =  peripheral
+        
             if peripheral.state == CBPeripheralState.Disconnected {
                 self.centralManager.connectPeripheral(peripheral, options: nil)
             }
@@ -125,7 +129,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
     func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
         DLOG(LogKind.CE,message:"切断完了")
         // TODO 暫定
-        self.peripheralList.removeAll()
+        self.peripheralDict.removeValueForKey(peripheral.name!)
     }
     
     
@@ -174,6 +178,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
             if characteristic.UUID.isEqual(CBUUID(string:CHR_UUID)) {
                 
                 
+                DLOG(LogKind.CE,message:"SAME UUID")
                 characteristic.properties
                 if characteristic.properties.contains(CBCharacteristicProperties.Notify) {
                     DLOG(LogKind.CE,message:"Notify On ")
@@ -241,10 +246,10 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
             value = NSString(data: characteristic.value!, encoding: NSUTF8StringEncoding)
             
         }
-        DLOG(LogKind.CE,message:"書き込み成功！value: \(value) service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID)")
+        DLOG(LogKind.CE,message:"書き込み成功！characteristic: \(characteristic)value: \(value) service uuid: \(characteristic.service.UUID), characteristic uuid: \(characteristic.UUID)")
         
         self.centralManager.cancelPeripheralConnection(peripheral)
-        self.stopScan()
+//        self.stopScan()
     }
     
     

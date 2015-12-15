@@ -80,14 +80,15 @@ class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
             return
         }
         
+        let uuid = NSUUID().UUIDString
         // アドバタイズメントデータを作成する
         let advertisementData = [
-            CBAdvertisementDataLocalNameKey: "Test Device",
+            CBAdvertisementDataLocalNameKey:uuid,
             CBAdvertisementDataServiceUUIDsKey: [self.serviceUUID]
         ]
         
         // アドバタイズ開始
-        self.peripheralManager.startAdvertising(advertisementData)
+        self.peripheralManager.startAdvertising(advertisementData as! [String : AnyObject])
         
     }
     
@@ -164,6 +165,9 @@ class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
         }
     }
     
+//    func peripheralManagerIsReadyToUpdateSubscribers(peripheral: CBPeripheralManager) {
+//    }
+    
     // Writeリクエスト受信時に呼ばれる
     func peripheralManager(peripheral: CBPeripheralManager, didReceiveWriteRequests requests: [CBATTRequest]) {
 
@@ -171,12 +175,7 @@ class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
 
         for request in requests {
             
-            var value:NSString? = nil
-            if request.characteristic.value != nil {
-                value = NSString(data: request.characteristic.value!, encoding: NSUTF8StringEncoding)
-                
-            }
-            DLOG(LogKind.PE,message:"Requested value:\(value) service uuid:\(request.characteristic.service.UUID) characteristic uuid:\(request.characteristic.UUID)")
+            DLOG(LogKind.PE,message:"Requested service uuid:\(request.characteristic.service.UUID) characteristic uuid:\(request.characteristic.UUID)")
             
             if request.characteristic.UUID.isEqual(self.characteristic.UUID) {
                 
@@ -184,7 +183,8 @@ class BlePeripheralManager: NSObject,CBPeripheralManagerDelegate {
                 self.characteristic.value = request.value;
                 DLOG(LogKind.PE,message:"\(requests.count) 件のWriteリクエストを受信！")
                 let nc = NSNotificationCenter.defaultCenter()
-                if value != nil {
+                if self.characteristic.value != nil {
+                    let value = NSString(data: self.characteristic.value!, encoding: NSUTF8StringEncoding)
                     nc.postNotificationName(NC_MSG, object: nil, userInfo: ["message" : value!.description])
                 }
                 
