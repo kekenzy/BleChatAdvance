@@ -14,6 +14,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var msgText: UITextField!
     
     var talkList = [String]()
+    var myTalkFlg = false
     var bleCentralManager:BleCentralManager!;
     var blePeripheralManager:BlePeripheralManager!;
     
@@ -59,6 +60,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
         
+//        if self.myTalkFlg {
+            cell.textLabel?.textAlignment = .Center
+//        } else {
+//            cell.textLabel?.textAlignment = NSTextAlignment.Left
+//        }
         let text = talkList[indexPath.row]
         cell.textLabel!.text = text
 //        self.msgText.text = ""
@@ -79,6 +85,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             value = userInfo["message"] as! String
         }
 
+        self.myTalkFlg = false
         talkList.insert(value, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
@@ -91,6 +98,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func onSendMsg(sender: AnyObject) {
         talkList.insert(self.msgText.text!, atIndex: 0)
+        self.myTalkFlg = true
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         bleCentralManager.writeMsg(self.msgText.text)

@@ -33,7 +33,7 @@ func LOG(message: String,
         #if DEBUG
 //            print("\(message) (File: \(file), Line: \(line))")
             print("\(message)")
-            let nc = NSNotificationCenter.defaultCenter()
-            nc.postNotificationName(NC_MSG, object: nil, userInfo: ["message" : message])
+//            let nc = NSNotificationCenter.defaultCenter()
+//            nc.postNotificationName(NC_MSG, object: nil, userInfo: ["message" : message])
         #endif
 }
