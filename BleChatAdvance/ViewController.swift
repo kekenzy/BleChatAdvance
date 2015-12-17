@@ -14,6 +14,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var msgText: UITextField!
     
     var talkList = [String]()
+    var myTalkFlg = false
     var bleCentralManager:BleCentralManager!;
     var blePeripheralManager:BlePeripheralManager!;
     
@@ -57,11 +58,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // セルの内容を変更
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
+        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
         
         let text = talkList[indexPath.row]
-        cell.textLabel!.text = text
-//        self.msgText.text = ""
+        
+        if myTalkFlg {
+            cell.detailTextLabel!.text = text
+            cell.detailTextLabel!.textColor = .blueColor()
+//            cell.detailTextLabel?.textAlignment = NSTextAlignment.Right
+        } else {
+            cell.textLabel!.text = text
+            cell.detailTextLabel!.textColor = .blackColor()
+//            cell.detailTextLabel?.textAlignment = NSTextAlignment.Left
+        }
+        myTalkFlg = false
         return cell
     }
     
@@ -79,6 +89,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             value = userInfo["message"] as! String
         }
 
+        myTalkFlg = false
         talkList.insert(value, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
@@ -90,6 +101,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @IBAction func onSendMsg(sender: AnyObject) {
+        myTalkFlg = true
         talkList.insert(self.msgText.text!, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)

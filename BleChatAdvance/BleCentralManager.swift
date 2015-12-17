@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetooth
+import UIKit
 
 
 class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
@@ -97,7 +98,6 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         let uuid = advertisementData[CBAdvertisementDataOverflowServiceUUIDsKey]
         let localName  = advertisementData[CBAdvertisementDataLocalNameKey]
         DLOG(LogKind.CE,message:"発見したBLEデバイス: \(peripheral) localName: \(localName) uuid: \(uuid)")
-        
         
         let value = self.peripheralDict[peripheral.name!]
         if value == nil {
@@ -189,10 +189,10 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
 //                    peripheral.readValueForCharacteristic(characteristic)
                 }
                 if characteristic.properties.contains(CBCharacteristicProperties.Write) {
-                    let data = self.msgText?.dataUsingEncoding(NSUTF8StringEncoding)
-//                    let msg = "Hello!!!!!!!"
-//                    let data = msg.dataUsingEncoding(NSUTF8StringEncoding)
-                    DLOG(LogKind.CE,message:"Write On :\(self.msgText!)")
+                    var name = UIDevice.currentDevice().name;
+                    var msg = self.msgText! + "\n from" + name
+                    let data = msg.dataUsingEncoding(NSUTF8StringEncoding)
+                    DLOG(LogKind.CE,message:"Write On :\(msg)")
                     peripheral.writeValue(data!, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithResponse)
                 }
                 if characteristic.properties.contains(CBCharacteristicProperties.WriteWithoutResponse) {

@@ -16,6 +16,7 @@
 		080293CE1C17F2DD00D75277 /* BleChatAdvanceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080293CD1C17F2DD00D75277 /* BleChatAdvanceUITests.swift */; };
 		080293DC1C18FAEC00D75277 /* BleCentralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080293DB1C18FAEC00D75277 /* BleCentralManager.swift */; };
 		080293DE1C19896F00D75277 /* BlePeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080293DD1C19896F00D75277 /* BlePeripheralManager.swift */; };
+		0847D3E81C22A34300F1B0C7 /* TalkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0847D3E71C22A34300F1B0C7 /* TalkCell.swift */; };
 		CED2A7971C1AF74E00AD403B /* CommonLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED2A7961C1AF74E00AD403B /* CommonLog.swift */; };
 		CED2A7991C1B294900AD403B /* CommonDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED2A7981C1B294900AD403B /* CommonDefine.swift */; };
 /* End PBXBuildFile section */
@@ -53,6 +54,7 @@
 		080293CF1C17F2DD00D75277 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		080293DB1C18FAEC00D75277 /* BleCentralManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BleCentralManager.swift; sourceTree = "<group>"; };
 		080293DD1C19896F00D75277 /* BlePeripheralManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlePeripheralManager.swift; sourceTree = "<group>"; };
+		0847D3E71C22A34300F1B0C7 /* TalkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkCell.swift; sourceTree = "<group>"; };
 		CED2A7961C1AF74E00AD403B /* CommonLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonLog.swift; sourceTree = "<group>"; };
 		CED2A7981C1B294900AD403B /* CommonDefine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonDefine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +117,7 @@
 				080293DD1C19896F00D75277 /* BlePeripheralManager.swift */,
 				CED2A7961C1AF74E00AD403B /* CommonLog.swift */,
 				CED2A7981C1B294900AD403B /* CommonDefine.swift */,
+				0847D3E71C22A34300F1B0C7 /* TalkCell.swift */,
 			);
 			path = BleChatAdvance;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0847D3E81C22A34300F1B0C7 /* TalkCell.swift in Sources */,
 				080293B01C17F2DD00D75277 /* ViewController.swift in Sources */,
 				080293AE1C17F2DD00D75277 /* AppDelegate.swift in Sources */,
 				080293DC1C18FAEC00D75277 /* BleCentralManager.swift in Sources */,
