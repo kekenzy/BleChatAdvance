@@ -56,6 +56,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
 //        }
         
         self.msgText = msg
+        DLOG(LogKind.CE, message:"msg:\(msg)")
         self.startScan()
     }
     // =========================================================================
@@ -190,7 +191,7 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
                 }
                 if characteristic.properties.contains(CBCharacteristicProperties.Write) {
                     var name = UIDevice.currentDevice().name;
-                    var msg = self.msgText! + "\n from" + name
+                    var msg = self.msgText! + " from " + name
                     let data = msg.dataUsingEncoding(NSUTF8StringEncoding)
                     DLOG(LogKind.CE,message:"Write On :\(msg)")
                     peripheral.writeValue(data!, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithResponse)
@@ -250,6 +251,8 @@ class BleCentralManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegat
         
         self.centralManager.cancelPeripheralConnection(peripheral)
 //        self.stopScan()
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.postNotificationName(NC_MSG, object: nil, userInfo: ["message" : STATUS_DID_WRITE])
     }
     
     

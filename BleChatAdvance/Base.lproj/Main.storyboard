@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -24,7 +25,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <items>
                                             <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="kiF-UC-mPL"/>
-                                            <barButtonItem title="Item" id="qJH-DF-865">
+                                            <barButtonItem title="Send" id="qJH-DF-865">
                                                 <connections>
                                                     <action selector="onSendMsg:" destination="BYZ-38-t0r" id="h6w-Is-aTS"/>
                                                 </connections>
@@ -32,7 +33,7 @@
                                             <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="wlv-Q7-Fdt"/>
                                             <barButtonItem style="plain" id="4c5-ja-yZD">
                                                 <textField key="customView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" id="L6g-Hm-eda">
-                                                    <rect key="frame" x="84" y="7" width="221" height="30"/>
+                                                    <rect key="frame" x="90" y="7" width="221" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -41,9 +42,55 @@
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="d3S-YW-fqN"/>
                                         </items>
                                     </toolbar>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ozh-QV-DDq">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="61" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ozh-QV-DDq">
                                         <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TalkCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="talkCell" rowHeight="61" id="bC4-nf-Rws" customClass="TalkCell" customModule="BleChatAdvance" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="600" height="61"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bC4-nf-Rws" id="jN5-U4-LWy">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="myTalk" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BfO-25-gsJ">
+                                                            <rect key="frame" x="8" y="19" width="584" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="otherTalk" textAlignment="natural" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wrN-Pi-bab">
+                                                            <rect key="frame" x="8" y="8" width="584" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f1b-xj-r9y">
+                                                            <rect key="frame" x="8" y="32" width="584" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                                            <color key="textColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="BfO-25-gsJ" firstAttribute="trailing" secondItem="jN5-U4-LWy" secondAttribute="trailingMargin" id="7Xb-Wr-cIn"/>
+                                                        <constraint firstItem="wrN-Pi-bab" firstAttribute="trailing" secondItem="BfO-25-gsJ" secondAttribute="trailing" id="7rk-D7-RCn"/>
+                                                        <constraint firstItem="f1b-xj-r9y" firstAttribute="bottom" secondItem="jN5-U4-LWy" secondAttribute="bottomMargin" id="FFF-Zp-Add"/>
+                                                        <constraint firstItem="wrN-Pi-bab" firstAttribute="top" secondItem="jN5-U4-LWy" secondAttribute="topMargin" id="UUz-SI-Orw"/>
+                                                        <constraint firstItem="BfO-25-gsJ" firstAttribute="centerY" secondItem="jN5-U4-LWy" secondAttribute="centerY" id="Z6I-xC-49G"/>
+                                                        <constraint firstItem="wrN-Pi-bab" firstAttribute="leading" secondItem="BfO-25-gsJ" secondAttribute="leading" id="ZBy-dO-ZMU"/>
+                                                        <constraint firstItem="BfO-25-gsJ" firstAttribute="leading" secondItem="jN5-U4-LWy" secondAttribute="leadingMargin" id="dQa-h1-qdy"/>
+                                                        <constraint firstItem="f1b-xj-r9y" firstAttribute="leading" secondItem="BfO-25-gsJ" secondAttribute="leading" id="hzG-ns-LSZ"/>
+                                                        <constraint firstItem="f1b-xj-r9y" firstAttribute="trailing" secondItem="BfO-25-gsJ" secondAttribute="trailing" id="xRJ-PK-3Tk"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="myTalkLabel" destination="BfO-25-gsJ" id="AhX-dN-1g9"/>
+                                                    <outlet property="otherNameLabel" destination="f1b-xj-r9y" id="4Jn-f7-0UF"/>
+                                                    <outlet property="otherTalkLabel" destination="wrN-Pi-bab" id="EW2-nw-iBZ"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
                                     </tableView>
                                 </subviews>
                             </stackView>

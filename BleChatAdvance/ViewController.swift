@@ -19,15 +19,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var blePeripheralManager:BlePeripheralManager!;
     
     // =========================================================================
+    // MARK:private
+    func onTap(recognize:UIPanGestureRecognizer) {
+//        self.textField.resignFirstResponder()
+        
+    }
+    
+    // =========================================================================
     // MARK:UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        bleCentralManager = BleCentralManager.sharedInstance;
-        blePeripheralManager = BlePeripheralManager.sharedInstance
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.separatorColor = .None
+        self.tableView.allowsSelection = false
+        self.bleCentralManager = BleCentralManager.sharedInstance;
+        self.blePeripheralManager = BlePeripheralManager.sharedInstance
+
+//        let tap = UITapGestureRecognizer(target: self, action: "onTap")
+//        view.addGestureRecognizer(tap)
         
         // 登録
         let nc = NSNotificationCenter.defaultCenter()
@@ -58,29 +70,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // セルの内容を変更
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
+//        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
         
+        let cell:TalkCell = tableView.dequeueReusableCellWithIdentifier("talkCell")! as! TalkCell
         let text = talkList[indexPath.row]
+        cell.setCell(self.myTalkFlg, msg: text)
         
-        if myTalkFlg {
-            cell.detailTextLabel!.text = text
-            cell.detailTextLabel!.textColor = .blueColor()
-//            cell.detailTextLabel?.textAlignment = NSTextAlignment.Right
-        } else {
-            cell.textLabel!.text = text
-            cell.detailTextLabel!.textColor = .blackColor()
-//            cell.detailTextLabel?.textAlignment = NSTextAlignment.Left
-        }
-        myTalkFlg = false
+        self.myTalkFlg = false
         return cell
     }
     
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool{
-        // キーボードを閉じる
-//        textField.resignFirstResponder()
-        return true
+    func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
     }
+    
+    
     
     func handleNotification(notification: NSNotification) {
         // 変数宣言時にアンラップ & キャストする方法
@@ -88,20 +91,29 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if let userInfo = notification.userInfo {
             value = userInfo["message"] as! String
         }
+        
+        if (value == STATUS_DID_WRITE) {
+            self.msgText.text = ""
+            return
+        }
+        
 
-        myTalkFlg = false
+        self.myTalkFlg = false
         talkList.insert(value, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
 
+    // =========================================================================
+    // MARK:IBAction
+    
     @IBAction func tapScreen(sender: AnyObject) {
         DLOG(LogKind.COM,message: "tapScreen")
 //        self.view.endEditing(true)
     }
     
     @IBAction func onSendMsg(sender: AnyObject) {
-        myTalkFlg = true
+        self.myTalkFlg = true
         talkList.insert(self.msgText.text!, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
