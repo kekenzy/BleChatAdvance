@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08025CFD1E0B69EB002A1E89 /* BleFormatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08025CFA1E0B69A3002A1E89 /* BleFormatter.framework */; };
+		08025CFE1E0B69EB002A1E89 /* BleFormatter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08025CFA1E0B69A3002A1E89 /* BleFormatter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		080293AE1C17F2DD00D75277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080293AD1C17F2DD00D75277 /* AppDelegate.swift */; };
 		080293B01C17F2DD00D75277 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080293AF1C17F2DD00D75277 /* ViewController.swift */; };
 		080293B31C17F2DD00D75277 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 080293B11C17F2DD00D75277 /* Main.storyboard */; };
@@ -14,14 +16,31 @@
 		080293B81C17F2DD00D75277 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 080293B61C17F2DD00D75277 /* LaunchScreen.storyboard */; };
 		080293C31C17F2DD00D75277 /* BleChatAdvanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080293C21C17F2DD00D75277 /* BleChatAdvanceTests.swift */; };
 		080293CE1C17F2DD00D75277 /* BleChatAdvanceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080293CD1C17F2DD00D75277 /* BleChatAdvanceUITests.swift */; };
-		080293DC1C18FAEC00D75277 /* BleCentralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080293DB1C18FAEC00D75277 /* BleCentralManager.swift */; };
-		080293DE1C19896F00D75277 /* BlePeripheralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080293DD1C19896F00D75277 /* BlePeripheralManager.swift */; };
 		0847D3E81C22A34300F1B0C7 /* TalkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0847D3E71C22A34300F1B0C7 /* TalkCell.swift */; };
-		CED2A7971C1AF74E00AD403B /* CommonLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED2A7961C1AF74E00AD403B /* CommonLog.swift */; };
-		CED2A7991C1B294900AD403B /* CommonDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED2A7981C1B294900AD403B /* CommonDefine.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		08025CF91E0B69A3002A1E89 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08025CF41E0B69A3002A1E89 /* BleFormatter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 08025CD11E0A1EDC002A1E89;
+			remoteInfo = BleFormatter;
+		};
+		08025CFB1E0B69A3002A1E89 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08025CF41E0B69A3002A1E89 /* BleFormatter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 08025CDA1E0A1EDD002A1E89;
+			remoteInfo = BleFormatterTests;
+		};
+		08025CFF1E0B69EB002A1E89 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08025CF41E0B69A3002A1E89 /* BleFormatter.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 08025CD01E0A1EDC002A1E89;
+			remoteInfo = BleFormatter;
+		};
 		080293BF1C17F2DD00D75277 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 080293A21C17F2DD00D75277 /* Project object */;
@@ -38,7 +57,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		08025D011E0B69EB002A1E89 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				08025CFE1E0B69EB002A1E89 /* BleFormatter.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		08025CF41E0B69A3002A1E89 /* BleFormatter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BleFormatter.xcodeproj; path = ../BleFormatter/BleFormatter.xcodeproj; sourceTree = "<group>"; };
 		080293AA1C17F2DD00D75277 /* BleChatAdvance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BleChatAdvance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		080293AD1C17F2DD00D75277 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		080293AF1C17F2DD00D75277 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -52,11 +86,7 @@
 		080293C91C17F2DD00D75277 /* BleChatAdvanceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BleChatAdvanceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		080293CD1C17F2DD00D75277 /* BleChatAdvanceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BleChatAdvanceUITests.swift; sourceTree = "<group>"; };
 		080293CF1C17F2DD00D75277 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		080293DB1C18FAEC00D75277 /* BleCentralManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BleCentralManager.swift; sourceTree = "<group>"; };
-		080293DD1C19896F00D75277 /* BlePeripheralManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlePeripheralManager.swift; sourceTree = "<group>"; };
 		0847D3E71C22A34300F1B0C7 /* TalkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkCell.swift; sourceTree = "<group>"; };
-		CED2A7961C1AF74E00AD403B /* CommonLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonLog.swift; sourceTree = "<group>"; };
-		CED2A7981C1B294900AD403B /* CommonDefine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonDefine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08025CFD1E0B69EB002A1E89 /* BleFormatter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +115,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08025CF31E0B69A0002A1E89 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				08025CF41E0B69A3002A1E89 /* BleFormatter.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		08025CF51E0B69A3002A1E89 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				08025CFA1E0B69A3002A1E89 /* BleFormatter.framework */,
+				08025CFC1E0B69A3002A1E89 /* BleFormatterTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		080293A11C17F2DD00D75277 = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +139,7 @@
 				080293C11C17F2DD00D75277 /* BleChatAdvanceTests */,
 				080293CC1C17F2DD00D75277 /* BleChatAdvanceUITests */,
 				080293AB1C17F2DD00D75277 /* Products */,
+				08025CF31E0B69A0002A1E89 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,10 +162,6 @@
 				080293B41C17F2DD00D75277 /* Assets.xcassets */,
 				080293B61C17F2DD00D75277 /* LaunchScreen.storyboard */,
 				080293B91C17F2DD00D75277 /* Info.plist */,
-				080293DB1C18FAEC00D75277 /* BleCentralManager.swift */,
-				080293DD1C19896F00D75277 /* BlePeripheralManager.swift */,
-				CED2A7961C1AF74E00AD403B /* CommonLog.swift */,
-				CED2A7981C1B294900AD403B /* CommonDefine.swift */,
 				0847D3E71C22A34300F1B0C7 /* TalkCell.swift */,
 			);
 			path = BleChatAdvance;
@@ -150,10 +195,12 @@
 				080293A61C17F2DD00D75277 /* Sources */,
 				080293A71C17F2DD00D75277 /* Frameworks */,
 				080293A81C17F2DD00D75277 /* Resources */,
+				08025D011E0B69EB002A1E89 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				08025D001E0B69EB002A1E89 /* PBXTargetDependency */,
 			);
 			name = BleChatAdvance;
 			productName = BleChatAdvance;
@@ -203,19 +250,22 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Kenji Nagai";
 				TargetAttributes = {
 					080293A91C17F2DD00D75277 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 3S5CDF8YQ8;
+						DevelopmentTeam = 6X2JS9YAAQ;
+						LastSwiftMigration = 0820;
 					};
 					080293BD1C17F2DD00D75277 = {
 						CreatedOnToolsVersion = 7.1.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 080293A91C17F2DD00D75277;
 					};
 					080293C81C17F2DD00D75277 = {
 						CreatedOnToolsVersion = 7.1.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 080293A91C17F2DD00D75277;
 					};
 				};
@@ -231,6 +281,12 @@
 			mainGroup = 080293A11C17F2DD00D75277;
 			productRefGroup = 080293AB1C17F2DD00D75277 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 08025CF51E0B69A3002A1E89 /* Products */;
+					ProjectRef = 08025CF41E0B69A3002A1E89 /* BleFormatter.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				080293A91C17F2DD00D75277 /* BleChatAdvance */,
@@ -239,6 +295,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		08025CFA1E0B69A3002A1E89 /* BleFormatter.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BleFormatter.framework;
+			remoteRef = 08025CF91E0B69A3002A1E89 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		08025CFC1E0B69A3002A1E89 /* BleFormatterTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = BleFormatterTests.xctest;
+			remoteRef = 08025CFB1E0B69A3002A1E89 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		080293A81C17F2DD00D75277 /* Resources */ = {
@@ -275,10 +348,6 @@
 				0847D3E81C22A34300F1B0C7 /* TalkCell.swift in Sources */,
 				080293B01C17F2DD00D75277 /* ViewController.swift in Sources */,
 				080293AE1C17F2DD00D75277 /* AppDelegate.swift in Sources */,
-				080293DC1C18FAEC00D75277 /* BleCentralManager.swift in Sources */,
-				CED2A7971C1AF74E00AD403B /* CommonLog.swift in Sources */,
-				080293DE1C19896F00D75277 /* BlePeripheralManager.swift in Sources */,
-				CED2A7991C1B294900AD403B /* CommonDefine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +370,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		08025D001E0B69EB002A1E89 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BleFormatter;
+			targetProxy = 08025CFF1E0B69EB002A1E89 /* PBXContainerItemProxy */;
+		};
 		080293C01C17F2DD00D75277 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 080293A91C17F2DD00D75277 /* BleChatAdvance */;
@@ -346,8 +420,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -369,7 +445,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -390,8 +466,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -407,9 +485,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -417,29 +496,35 @@
 		080293D31C17F2DD00D75277 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 6X2JS9YAAQ;
 				INFOPLIST_FILE = BleChatAdvance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kekenzy.BleChatAdvance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		080293D41C17F2DD00D75277 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 6X2JS9YAAQ;
 				INFOPLIST_FILE = BleChatAdvance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kekenzy.BleChatAdvance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -451,6 +536,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kekenzy.BleChatAdvanceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BleChatAdvance.app/BleChatAdvance";
 			};
 			name = Debug;
@@ -463,6 +549,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kekenzy.BleChatAdvanceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BleChatAdvance.app/BleChatAdvance";
 			};
 			name = Release;
@@ -474,6 +561,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kekenzy.BleChatAdvanceUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = BleChatAdvance;
 				USES_XCTRUNNER = YES;
 			};
@@ -486,6 +574,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kekenzy.BleChatAdvanceUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = BleChatAdvance;
 				USES_XCTRUNNER = YES;
 			};

@@ -7,6 +7,12 @@
 //
 
 import UIKit
+import BleFormatter
+
+let SERVICE_UUID = "0BF806E9-F1FE-4326-AB21-CEAFDEAFE0E0"
+let CHR_UUID = "F5A6373E-B756-4B55-BE51-F8BD9A4A3193"
+let NC_MSG = "NC_MSG"
+let STATUS_DID_WRITE = "STATUS_DID_WRITE"
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -15,12 +21,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var talkList = [String]()
     var myTalkFlg = false
-    var bleCentralManager:BleCentralManager!;
-    var blePeripheralManager:BlePeripheralManager!;
+    var bleManager:BleManager!;
     
     // =========================================================================
     // MARK:private
-    func onTap(recognize:UIPanGestureRecognizer) {
+    func onTap(_ recognize:UIPanGestureRecognizer) {
 //        self.textField.resignFirstResponder()
         
     }
@@ -33,17 +38,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.separatorColor = .None
+        self.tableView.separatorColor = .none
         self.tableView.allowsSelection = false
-        self.bleCentralManager = BleCentralManager.sharedInstance;
-        self.blePeripheralManager = BlePeripheralManager.sharedInstance
+        self.bleManager = BleManager.sharedInstance;
+        self.bleManager.setUUID(serviceUUID: SERVICE_UUID, charUUID: CHR_UUID, ncMsg: NC_MSG)
 
 //        let tap = UITapGestureRecognizer(target: self, action: "onTap")
 //        view.addGestureRecognizer(tap)
         
         // 登録
-        let nc = NSNotificationCenter.defaultCenter()
-        nc.addObserver(self, selector: "handleNotification:", name: NC_MSG, object: nil)
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(ViewController.handleNotification(_:)), name: NSNotification.Name(rawValue: NC_MSG), object: nil)
 
     }
 
@@ -52,27 +57,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Dispose of any resources that can be recreated.
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 
     // =========================================================================
     // MARK:UITableViewDelegate
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     // セルの行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return talkList.count
     }
     
     // セルの内容を変更
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
         
-        let cell:TalkCell = tableView.dequeueReusableCellWithIdentifier("talkCell")! as! TalkCell
+        let cell:TalkCell = tableView.dequeueReusableCell(withIdentifier: "talkCell")! as! TalkCell
         let text = talkList[indexPath.row]
         cell.setCell(self.myTalkFlg, msg: text)
         
@@ -80,12 +85,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
-    func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     }
     
     
     
-    func handleNotification(notification: NSNotification) {
+    func handleNotification(_ notification: Notification) {
         // 変数宣言時にアンラップ & キャストする方法
         var value:String! = ""
         if let userInfo = notification.userInfo {
@@ -99,25 +104,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
 
         self.myTalkFlg = false
-        talkList.insert(value, atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        talkList.insert(value, at: 0)
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.tableView.insertRows(at: [indexPath], with: .automatic)
     }
 
     // =========================================================================
     // MARK:IBAction
     
-    @IBAction func tapScreen(sender: AnyObject) {
-        DLOG(LogKind.COM,message: "tapScreen")
+    @IBAction func tapScreen(_ sender: AnyObject) {
+//        DLOG(LogKind.COM,message: "tapScreen")
 //        self.view.endEditing(true)
     }
     
-    @IBAction func onSendMsg(sender: AnyObject) {
+    @IBAction func onSendMsg(_ sender: AnyObject) {
         self.myTalkFlg = true
-        talkList.insert(self.msgText.text!, atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        bleCentralManager.writeMsg(self.msgText.text)
+        talkList.insert(self.msgText.text!, at: 0)
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.tableView.insertRows(at: [indexPath], with: .automatic)
+        bleManager.write(msg: self.msgText.text, statusDidWrite: STATUS_DID_WRITE)
         // Send はペリフェラルから
     }
 }
