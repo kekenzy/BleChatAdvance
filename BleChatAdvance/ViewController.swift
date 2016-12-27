@@ -10,9 +10,10 @@ import UIKit
 import BleFormatter
 
 let SERVICE_UUID = "0BF806E9-F1FE-4326-AB21-CEAFDEAFE0E0"
-let CHR_UUID = "F5A6373E-B756-4B55-BE51-F8BD9A4A3193"
-let NC_MSG = "NC_MSG"
-let STATUS_DID_WRITE = "STATUS_DID_WRITE"
+let CHR_UUID_1 = "F5A6373E-B756-4B55-BE51-F8BD9A4A3193"
+let CHR_UUID_2 = "DB76EB66-975B-412D-977F-4FC072E8C28F"
+let CHR_UUID_3 = "D744D2FC-1989-45AD-B497-F5E5A22649A2"
+let CHR_UUID_4 = "E7136B95-14E0-4975-8C69-9D7D830D4F87"
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -22,6 +23,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var talkList = [String]()
     var myTalkFlg = false
     var bleManager:BleManager!;
+    var dataFormat:[BleDataFormat] = []
     
     // =========================================================================
     // MARK:private
@@ -40,16 +42,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.tableView.dataSource = self
         self.tableView.separatorColor = .none
         self.tableView.allowsSelection = false
-        self.bleManager = BleManager.sharedInstance;
-        self.bleManager.setUUID(serviceUUID: SERVICE_UUID, charUUID: CHR_UUID, ncMsg: NC_MSG)
-
-//        let tap = UITapGestureRecognizer(target: self, action: "onTap")
-//        view.addGestureRecognizer(tap)
         
-        // 登録
+        self.bleManager = BleManager.sharedInstance;
+        self.bleManager.setUUID(serviceUUID: SERVICE_UUID)
+        self.dataFormat.append(BleDataFormat(uuid: CHR_UUID_1, dataType: .String))
+        self.dataFormat.append(BleDataFormat(uuid: CHR_UUID_2, dataType: .Int))
+        self.dataFormat.append(BleDataFormat(uuid: CHR_UUID_3, dataType: .Double))
+        self.dataFormat.append(BleDataFormat(uuid: CHR_UUID_4, dataType: .Data))
+        self.bleManager.setReadDataFormat(bleDataFormat: self.dataFormat)
+        
+        // observer登録
+        self.bleManager.addObserver(self, withRead: #selector(ViewController.readNotification(_:)))
+        self.bleManager.addObserver(self, withWrite: #selector(ViewController.writeNotification(_:)))
+        
+    }
+    
+    deinit  {
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(ViewController.handleNotification(_:)), name: NSNotification.Name(rawValue: NC_MSG), object: nil)
-
+        nc.removeObserver(self)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -89,25 +100,54 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
-    
-    func handleNotification(_ notification: Notification) {
+    func readNotification(_ notification: Notification) {
         // 変数宣言時にアンラップ & キャストする方法
-        var value:String! = ""
-        if let userInfo = notification.userInfo {
-            value = userInfo["message"] as! String
-        }
-        
-        if (value == STATUS_DID_WRITE) {
-            self.msgText.text = ""
+//        let userInfo = [BleDataKey.NOTIFY_READ.description():dataFormatList[index].characteristicUUID.description,
+//                        BleDataKey.VALUE.description():dataFormatList[index].value] as [String : Any]
+        //                        let value = self.dataFormatList[index].getStringFromValue()
+        var tmpValue:String?
+        guard let userInfo = notification.userInfo else {
             return
         }
+        let data = userInfo[BleDataKey.NOTIFY_READ.description()] as! BleDataFormat
+        switch data.dataType {
+        case .String:
+            tmpValue = data.getStringFromValue() as String
+        case .Int:
+            let i = data.getIntFromValue() as Int
+            print("read Int value = \(i)")
+            tmpValue = data.getStringFromValue() as String
+        case .Double:
+            let i = data.getDoubleFromValue() as Double
+            print("read Double value = \(i)")
+            tmpValue = data.getStringFromValue() as String
+        case .Data:
+            let i = data.getDataFromValue() as Data
+            print("read Data value = \(i)")
+            tmpValue = data.getStringFromValue() as String
+        }
         
-
+        guard let value = tmpValue else {
+            print("can not read Notification message!!")
+            return
+        }
+        print("read Notification message  =  \(value)")
+        
+        let postName = data.getPostName() as String
+        
         self.myTalkFlg = false
-        talkList.insert(value, at: 0)
+        talkList.insert(value + "," + postName, at: 0)
         let indexPath = IndexPath(row: 0, section: 0)
         self.tableView.insertRows(at: [indexPath], with: .automatic)
     }
+    
+    func writeNotification(_ notification: Notification) {
+        // 変数宣言時にアンラップ & キャストする方法
+        
+        self.msgText.text = ""
+        return
+    }
+    
 
     // =========================================================================
     // MARK:IBAction
@@ -122,8 +162,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         talkList.insert(self.msgText.text!, at: 0)
         let indexPath = IndexPath(row: 0, section: 0)
         self.tableView.insertRows(at: [indexPath], with: .automatic)
-        bleManager.write(msg: self.msgText.text, statusDidWrite: STATUS_DID_WRITE)
-        // Send はペリフェラルから
+        
+        // wirte処理
+        bleManager.write(withString: self.msgText.text!, dataFormat: &self.dataFormat[0])
+//        bleManager.write(withInt: 100, dataFormat: &self.dataFormat[1])
+//        bleManager.write(withDouble: 0.00044, dataFormat: &self.dataFormat[2])
+//        var str = "Hello"
+//        let data = str.data(using: String.Encoding.utf8)
+//        bleManager.write(withData: data!, dataFormat: &self.dataFormat[3])
     }
 }
 

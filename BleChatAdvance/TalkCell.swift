@@ -15,7 +15,7 @@ class TalkCell:UITableViewCell {
     @IBOutlet weak var otherNameLabel: UILabel!
     
     func setCell(_ myMsgFlg: Bool, msg: String) {
-        let msgs:[String]? = msg.components(separatedBy: " from")
+        let msgs:[String]? = msg.components(separatedBy: ",")
         if (myMsgFlg || msgs!.count <= 1) {
             self.myTalkLabel.isHidden = false
             self.myTalkLabel.text = msgs?[0]
