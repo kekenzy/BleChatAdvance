@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		08025CFD1E0B69EB002A1E89 /* BleFormatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08025CFA1E0B69A3002A1E89 /* BleFormatter.framework */; };
-		08025CFE1E0B69EB002A1E89 /* BleFormatter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08025CFA1E0B69A3002A1E89 /* BleFormatter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		080293AE1C17F2DD00D75277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080293AD1C17F2DD00D75277 /* AppDelegate.swift */; };
 		080293B01C17F2DD00D75277 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080293AF1C17F2DD00D75277 /* ViewController.swift */; };
 		080293B31C17F2DD00D75277 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 080293B11C17F2DD00D75277 /* Main.storyboard */; };
@@ -16,31 +14,12 @@
 		080293B81C17F2DD00D75277 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 080293B61C17F2DD00D75277 /* LaunchScreen.storyboard */; };
 		080293C31C17F2DD00D75277 /* BleChatAdvanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080293C21C17F2DD00D75277 /* BleChatAdvanceTests.swift */; };
 		080293CE1C17F2DD00D75277 /* BleChatAdvanceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080293CD1C17F2DD00D75277 /* BleChatAdvanceUITests.swift */; };
+		0830A6811F6B5E7C00058FBD /* BleFormatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0830A6801F6B5E7C00058FBD /* BleFormatter.framework */; };
+		0830A6831F6B5ECD00058FBD /* BleFormatter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0830A6801F6B5E7C00058FBD /* BleFormatter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0847D3E81C22A34300F1B0C7 /* TalkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0847D3E71C22A34300F1B0C7 /* TalkCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		08025CF91E0B69A3002A1E89 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 08025CF41E0B69A3002A1E89 /* BleFormatter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 08025CD11E0A1EDC002A1E89;
-			remoteInfo = BleFormatter;
-		};
-		08025CFB1E0B69A3002A1E89 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 08025CF41E0B69A3002A1E89 /* BleFormatter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 08025CDA1E0A1EDD002A1E89;
-			remoteInfo = BleFormatterTests;
-		};
-		08025CFF1E0B69EB002A1E89 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 08025CF41E0B69A3002A1E89 /* BleFormatter.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 08025CD01E0A1EDC002A1E89;
-			remoteInfo = BleFormatter;
-		};
 		080293BF1C17F2DD00D75277 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 080293A21C17F2DD00D75277 /* Project object */;
@@ -64,7 +43,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				08025CFE1E0B69EB002A1E89 /* BleFormatter.framework in Embed Frameworks */,
+				0830A6831F6B5ECD00058FBD /* BleFormatter.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -72,7 +51,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		08025CF41E0B69A3002A1E89 /* BleFormatter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BleFormatter.xcodeproj; path = ../BleFormatter/BleFormatter.xcodeproj; sourceTree = "<group>"; };
 		080293AA1C17F2DD00D75277 /* BleChatAdvance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BleChatAdvance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		080293AD1C17F2DD00D75277 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		080293AF1C17F2DD00D75277 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +64,7 @@
 		080293C91C17F2DD00D75277 /* BleChatAdvanceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BleChatAdvanceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		080293CD1C17F2DD00D75277 /* BleChatAdvanceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BleChatAdvanceUITests.swift; sourceTree = "<group>"; };
 		080293CF1C17F2DD00D75277 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0830A6801F6B5E7C00058FBD /* BleFormatter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BleFormatter.framework; sourceTree = "<group>"; };
 		0847D3E71C22A34300F1B0C7 /* TalkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08025CFD1E0B69EB002A1E89 /* BleFormatter.framework in Frameworks */,
+				0830A6811F6B5E7C00058FBD /* BleFormatter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,18 +97,9 @@
 		08025CF31E0B69A0002A1E89 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				08025CF41E0B69A3002A1E89 /* BleFormatter.xcodeproj */,
+				0830A6801F6B5E7C00058FBD /* BleFormatter.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		08025CF51E0B69A3002A1E89 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				08025CFA1E0B69A3002A1E89 /* BleFormatter.framework */,
-				08025CFC1E0B69A3002A1E89 /* BleFormatterTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		080293A11C17F2DD00D75277 = {
@@ -200,7 +170,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				08025D001E0B69EB002A1E89 /* PBXTargetDependency */,
 			);
 			name = BleChatAdvance;
 			productName = BleChatAdvance;
@@ -255,7 +224,7 @@
 				TargetAttributes = {
 					080293A91C17F2DD00D75277 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 6X2JS9YAAQ;
+						DevelopmentTeam = 7M5S9X69CT;
 						LastSwiftMigration = 0820;
 					};
 					080293BD1C17F2DD00D75277 = {
@@ -281,12 +250,6 @@
 			mainGroup = 080293A11C17F2DD00D75277;
 			productRefGroup = 080293AB1C17F2DD00D75277 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 08025CF51E0B69A3002A1E89 /* Products */;
-					ProjectRef = 08025CF41E0B69A3002A1E89 /* BleFormatter.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				080293A91C17F2DD00D75277 /* BleChatAdvance */,
@@ -295,23 +258,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		08025CFA1E0B69A3002A1E89 /* BleFormatter.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BleFormatter.framework;
-			remoteRef = 08025CF91E0B69A3002A1E89 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		08025CFC1E0B69A3002A1E89 /* BleFormatterTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BleFormatterTests.xctest;
-			remoteRef = 08025CFB1E0B69A3002A1E89 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		080293A81C17F2DD00D75277 /* Resources */ = {
@@ -370,11 +316,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		08025D001E0B69EB002A1E89 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BleFormatter;
-			targetProxy = 08025CFF1E0B69EB002A1E89 /* PBXContainerItemProxy */;
-		};
 		080293C01C17F2DD00D75277 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 080293A91C17F2DD00D75277 /* BleChatAdvance */;
@@ -500,7 +441,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6X2JS9YAAQ;
+				DEVELOPMENT_TEAM = 7M5S9X69CT;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = BleChatAdvance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
@@ -518,7 +463,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6X2JS9YAAQ;
+				DEVELOPMENT_TEAM = 7M5S9X69CT;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = BleChatAdvance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kekenzy.BleChatAdvance;
